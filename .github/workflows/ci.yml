@@ -47,14 +47,14 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --bin $Binary_name
+          args: --release --bin ${{ env.Binary_name }}
       - name: Compress things up
         run: |
-          cp ./target/release/$Binary_name${{ matrix.suffix }} ./
+          cp ./target/release/${{ env.Binary_name }}${{ matrix.suffix }} ./
           ${{ matrix.comp_er }} \
             ${{ matrix.comp_args }} \
             ${{ steps.get_repository_name.outputs.REPO_NAME }}-${{ matrix.target }}.${{ matrix.comp_type }} \
-            $Binary_name${{ matrix.suffix }}
+            ${{ env.Binary_name }}${{ matrix.suffix }}
           ls
       - uses: actions/upload-artifact@v3
         with:
