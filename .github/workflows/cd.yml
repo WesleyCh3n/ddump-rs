@@ -18,6 +18,8 @@ jobs:
             comp_args: 'a -tzip'
             comp_type: zip
     runs-on: ${{ matrix.os }}
+    env:
+      Binary_name: ddump
     steps:
       - uses: actions/checkout@v2
       - id: get_repository_name
@@ -41,11 +43,14 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --bin gaitool-cli
+          args: --release --bin $Binary_name
       - name: Compress things up
         run: |
-          cp ./target/release/gaitool-cli${{ matrix.suffix }} ./
-          ${{ matrix.comp_er }} ${{ matrix.comp_args }} ${{ steps.get_repository_name.outputs.REPO_NAME }}-${{ matrix.target }}.${{ matrix.comp_type }} gaitool-cli${{ matrix.suffix }} assets/
+          cp ./target/release/$Binary_name${{ matrix.suffix }} ./
+          ${{ matrix.comp_er }} \
+            ${{ matrix.comp_args }} \
+            ${{ steps.get_repository_name.outputs.REPO_NAME }}-${{ matrix.target }}.${{ matrix.comp_type }} \
+            $Binary_name${{ matrix.suffix }}
           ls
       - uses: actions/upload-artifact@v3
         with:
