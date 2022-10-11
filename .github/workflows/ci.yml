@@ -51,9 +51,9 @@ jobs:
       - name: Compress things up
         run: |
           cp ./target/release/${{ env.Binary_name }}${{ matrix.suffix }} ./
-          ${{ matrix.comp_er }} \
-            ${{ matrix.comp_args }} \
-            ${{ steps.get_repository_name.outputs.REPO_NAME }}-${{ matrix.target }}.${{ matrix.comp_type }} \
+          ${{ matrix.comp_er }} `
+            ${{ matrix.comp_args }} `
+            ${{ steps.get_repository_name.outputs.REPO_NAME }}-${{ matrix.target }}.${{ matrix.comp_type }} `
             ${{ env.Binary_name }}${{ matrix.suffix }}
           ls
       - uses: actions/upload-artifact@v3
